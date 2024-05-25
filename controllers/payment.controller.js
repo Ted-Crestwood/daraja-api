@@ -4,33 +4,11 @@ let unirest = require('unirest');
 const Transaction = require('../models/Transaction');
 
 
-const getAccessToken = async () => {
-    const consumerKey = process.env.MPESA_CONSUMER_KEY;
-    const consumerSecret = process.env.MPESA_CONSUMER_SECRET;
-    const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString('base64');
-
-    try {
-        const response = await unirest.get("https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials")
-            .headers({
-                'Authorization': `Basic ${auth}`
-            });
-
-        if (response.body.access_token) {
-            return response.body.access_token;
-        } else {
-            throw new Error('Unable to fetch access token');
-        }
-    } catch (error) {
-        console.error('Error fetching access token:', error);
-        throw error;
-    }
-};
 
 const safaricomTransaction = async (req, res) => {
     const payment = req.body;
     try {
         const accessToken = await getAccessToken();
-
         const response = await unirest.post(process.env.SAFARICOM_API)
             .headers({
                 'Content-Type': 'application/json',
@@ -75,6 +53,30 @@ const safaricomTransaction = async (req, res) => {
         });
     }
 };
+
+const getAccessToken = async () => {
+    const consumerKey = process.env.MPESA_CONSUMER_KEY;
+    const consumerSecret = process.env.MPESA_CONSUMER_SECRET;
+    const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString('base64');
+
+    try {
+        const response = await unirest.get("https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials")
+            .headers({
+                'Authorization': `Basic ${auth}`
+            });
+        const accessToken = response.body.access_token
+        if (accessToken) {
+            return accessToken;
+        } else {
+            throw new Error('Unable to fetch access token');
+        }
+    } catch (error) {
+        console.error('Error fetching access token:', error);
+        throw error;
+    }
+};
+
+
 const handleCallback = async (req, res) => {
     const callbackData = req.body;
     console.log("callback :",callbackData)
