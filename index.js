@@ -8,6 +8,7 @@ const { error } = require("console");
 // const ngrok = require("@ngrok/ngrok");
 dotenv.config()
 const auth = process.env.NGROK_AUTHTOKEN;
+const string = process.env.MONGO_DB_STRING;
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,7 +25,7 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
 })
 // ngrok.connect(PORT).then(console.log("Connected to ngrok..."))
-mongoose.connect("mongodb+srv://Admin:7668Tamera@safaricom-payment.1ui2ued.mongodb.net/?retryWrites=true&w=majority&appName=Safaricom-payment")
+mongoose.connect(string)
 .then(()=>{
     console.log("Connected to the server successfuly")
 })

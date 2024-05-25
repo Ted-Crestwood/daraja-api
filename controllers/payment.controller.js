@@ -29,14 +29,9 @@ const getAccessToken = async () => {
 const safaricomTransaction = async (req, res) => {
     const payment = req.body;
     try {
-        // Obtain a valid access token
         const accessToken = await getAccessToken();
 
-        // Log the payment request data
-        // console.log("Payment data received:", payment);
-
-        // Send request to Safaricom API
-        const response = await unirest.post("https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest")
+        const response = await unirest.post(process.env.SAFARICOM_API)
             .headers({
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`
@@ -50,27 +45,19 @@ const safaricomTransaction = async (req, res) => {
                 PartyA: payment.PartyA,
                 PartyB: payment.PartyB,
                 PhoneNumber: payment.PhoneNumber,
-                CallBackURL: payment.CallBackURL,
+                CallBackURL: "https://crestwood-daraja-api.onrender.com/callback",
                 AccountReference: payment.AccountReference,
                 TransactionDesc: payment.TransactionDesc,
                 orderRef: payment.orderRef
             });
         const status = response.body.ResponseCode;
 
-        // Log the response from the API
-            
-        // Check for errors in the response
-        if (response.body.errorCode) {
-            throw new Error(`Error from Safaricom API: ${response.body.errorMessage}`);
-        }
-
-        // Process the payment if no errors
         if (payment) {
             await Transaction.create({ amount: payment.Amount, phone: payment.PartyA, orderRef: payment.orderRef });
             console.log("Transaction recorded in the database");
            if(status === "0"){
             res.status(200).json({
-                message:"Processing transaction"
+                message:"Processing transaction..."
             })
            }else{
             res.status(201).json({
