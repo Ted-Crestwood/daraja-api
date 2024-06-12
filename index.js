@@ -21,8 +21,8 @@ app.use(bodyParser.json());
 app.use(express.json())
 app.use(cors());
 
-app.use("/pay", handlePay)
-app.use("/callbackurl", paymentPush)
+app.get("/pay", handlePay)
+app.post("/mpesa/callback", paymentPush)
 // app.use("/url", callback)
 
 
