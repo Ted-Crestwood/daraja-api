@@ -33,4 +33,4 @@ function handlePay() {
     //     console.log(res.raw_body);
     // });
 }
-module.exports = handlePay;
+module.exports = {handlePay};

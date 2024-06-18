@@ -7,8 +7,8 @@ const callback = require("./routes/payment.route");
 
 const mongoose  = require("mongoose");
 const  Pay  = require("./routes/pay.route");
-const handlePay = require("./utils/stkPush");
-const  paymentPush  = require("./controllers/stk.controller");
+const {handlePay} = require("./utils/stkPush");
+const  {paymentPush}  = require("./controllers/stk.controller");
 
 
 dotenv.config()
