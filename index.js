@@ -9,6 +9,7 @@ const mongoose  = require("mongoose");
 const  Pay  = require("./routes/pay.route");
 const {handlePay} = require("./utils/stkPush");
 const  {paymentPush}  = require("./controllers/stk.controller");
+const { sendStkPush } = require("./controllers/stkIntegration");
 
 
 dotenv.config()
@@ -22,7 +23,8 @@ app.use(express.json())
 app.use(cors());
 
 app.get("/pay", handlePay)
-app.post("/mpesa/callback", paymentPush)
+app.get("/payment",sendStkPush)
+app.post("/callbackurl", paymentPush)
 // app.use("/url", callback)
 
 
