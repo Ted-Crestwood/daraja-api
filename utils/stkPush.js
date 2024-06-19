@@ -9,11 +9,11 @@ function handlePay() {
     let req = unirest('POST', 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest')
         .headers({
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer AhDjT13a2XGoLdIi7pSep7lQr9PC'
+            'Authorization': 'Bearer MrZ0xKarITOBk5cP5YIDJ0PXa1KX'
         })
         .send(JSON.stringify({
             "BusinessShortCode": 174379,
-            "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjQwNjE4MDkyMjI0",
+            "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjQwNjE5MTAxNTEy",
             "Timestamp": "20240618092224",
             "TransactionType": "CustomerPayBillOnline",
             "Amount": 1,
@@ -31,9 +31,9 @@ function handlePay() {
             console.log("code:", resCode.ResponseCode)
             // return resData;
         })
-    }
-    module.exports = { handlePay };
-    // .end(res => {
-    //     if (res.error) throw new Error(res.error);
-    //     console.log(res.raw_body);
-    // });
+}
+module.exports = { handlePay };
+// .end(res => {
+//     if (res.error) throw new Error(res.error);
+//     console.log(res.raw_body);
+// });
