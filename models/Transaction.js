@@ -2,9 +2,9 @@ const { Schema, model } = require("mongoose");
 
 const safaricomPayment = new Schema({
     // orderRef:{type:String,required:true},
-    phone:{type:Number},
-    amount:{type:Number},
-    code:{type:Number}
+    id:{type:Number},
+    code:{type:Number},
+    data:{type:Array}
 },{
     timestamps:true
 })

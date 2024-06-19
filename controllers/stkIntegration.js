@@ -18,33 +18,28 @@ const stk_password = "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjOD
 const url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
 
 async function sendStkPush(req, res) {
-  const {phone,amount} = req.body;
+  const { phone, amount } = req.body;
   unirest.post('https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest')
-  .headers({
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer ttNcwM5kQm12VEySrQ3ODpsFjkeC'
-  })
-  .send(JSON.stringify({
+    .headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer i8BSRIaXYzdW90LfGnLlwfpfsGvy'
+    })
+    .send(JSON.stringify({
       "BusinessShortCode": 174379,
-      "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjQwNjE5MTEyOTEw",
-      "Timestamp": "20240619112910",
+      "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjQwNjE5MjExNjA2",
+      "Timestamp": "20240619211606",
       "TransactionType": "CustomerPayBillOnline",
-      "Amount": amount,
-      "PartyA": phone,
+      "Amount": 1,
+      "PartyA": 254707894405,
       "PartyB": 174379,
-      "PhoneNumber": phone,
+      "PhoneNumber": 254707894405,
       "CallBackURL": "https://crestwood-daraja-api.onrender.com/callbackurl",
-      "AccountReference": "Crestwood.co.ke",
-      "TransactionDesc": "First pay" 
+      "AccountReference": "Crestwood",
+      "TransactionDesc": "Mpesa"
     }))
-  .end(res => {
-    if (res.error){
-      throw new Error(res.error)
-    }else{
-       Transaction.create({phone:phone,amount:amount,code:res.raw_body.ResponseCode})
-      return res.raw_bod;
-    }
-    console.log(res.raw_body);
-  });
+    .end(res => {
+      if (res.error) throw new Error(res.error);
+      console.log(res.raw_body);
+    });
 }
 module.exports = { sendStkPush }
