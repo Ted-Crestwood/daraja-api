@@ -2,8 +2,9 @@
 let unirest = require('unirest');
 let resCode = null;
 const callbackUrl = "https://crestwood-daraja-api.onrender.com/mpesa/callback";
-const url = "https://f840-197-232-85-124.ngrok-free.app/mpesa/callback"
+const url = process.env.CALL_BACK_URL
 //"http://localhost:5000/mpesa/callback"
+
 function handlePay() {
     let req = unirest('POST', 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest')
         .headers({
