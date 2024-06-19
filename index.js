@@ -23,7 +23,7 @@ app.use(express.json())
 app.use(cors());
 
 app.get("/pay", handlePay)
-app.get("/payment",sendStkPush)
+app.post("/payment",sendStkPush)
 app.post("/callbackurl", paymentPush)
 // app.use("/url", callback)
 

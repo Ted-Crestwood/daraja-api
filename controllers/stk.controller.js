@@ -1,3 +1,4 @@
+const Status = require("../models/Status");
 const handlePay = require("../utils/stkPush");
 
 const paymentPush = (req, res) => {
@@ -26,11 +27,7 @@ const paymentPush = (req, res) => {
     // Get phone number
     const phoneNumberObj = body.Item.find(obj => obj.Name === 'PhoneNumber');
     const phone = phoneNumberObj.Value
-
-    // Save the variables to a file or database, etc.
-    // ...
-
-    // Return a success response to mpesa
+    Status.create({phone:phone, amount:amount, statusCode:result_code})
     return res.json("success");
 }
 const transactionStatus = (req, res) => {
